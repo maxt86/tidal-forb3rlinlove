@@ -1,0 +1,148 @@
+-- maxt: for ( ; b3rlin; ) love();
+
+let sbpm num = setcps(num/60/4)
+    sc = silence
+    ssr num = (num ~>)
+    sr = ssr 1
+    ss = hush
+
+
+sbpm(125)
+
+ss
+
+do
+  resetCycles
+  jumpIn' 1 0
+    $ every 4 (within (0, 0.25) (# crush 3))
+    $ within (0, 0.25) (# crush 3.8)
+    $ striate 4
+    $ "stomp:4*4"
+
+do
+  xfadeIn 2 4
+    $ "[bass1:9 bass1:5]!4"
+      # cut 1
+      # begin 0.4
+      # room 0.06
+      # sz 0.8
+  jumpIn' 3 0
+    $ "hh27"
+      <| n "[10 13 2 13]*2"
+
+do
+  jumpIn' 2 0
+    $ "[bass1:9 bass1:5]!4"
+      # cut 1
+      # begin 0.45
+      # room (0.06 + 0.24*(slow 16 $ ssr (1/16) saw))
+      # sz 0.95
+      # gain 1.02
+  jumpIn' 3 0 sc
+
+d3
+  $ "hh27"
+    <| n "[10 13 2 13]*2"
+    # gain 1.02
+
+do
+  jumpIn' 1 0
+    $ every 4 (# gain 0)
+    $ within (0, 0.25) (# gain 0)
+    $ striate 4
+    $ "stomp:4*4"
+      # hpf 1200
+      # gain 1.3
+  jumpIn' 2 0
+    $ "[bass1:9 bass1:5]!4"
+      # cut 1
+      # begin 0.4
+      # room 0.06
+      # sz 0.8
+  jumpIn' 3 0
+    $ sr
+    $ "jp:6/4"
+      # up (-7)
+      # gain 1.2
+
+do
+  jumpIn' 3 0
+    $ sr
+    $ every 8 (# gain 0)
+    $ "jp:6/4"
+      # up (-7)
+      # gain 1.2
+  jumpIn' 4 0
+    $ sr
+    $ every 8 (# gain 0.95)
+    $ striate 6
+    $ "superhoover"
+      # voice 1
+      # decay 0.25
+      # accelerate 0.25
+      # resonance 0.6
+      # lfo 4
+      # rate 32
+      # pitch1 0.8
+      # hpf 1600
+      # up (-12)
+      # gain 0
+  jumpIn' 5 0
+    $ "hh27"
+      <| n "[10 13 2 13]*2"
+
+do
+  jumpIn' 4 0
+    $ sr
+    $ "fm/8"
+      # gain 0.65
+  jumpIn' 5 0
+    $ "hh27"
+      <| n "[19!4, [~ 13 2 13]*2]"
+      # gain 1.02
+
+do
+  xfadeIn 1 18 sc
+  jumpIn' 5 0
+    $ "hh27"
+      <| n "[19!4, [10 13 2 13]*2]"
+      # gain 1.02
+  xfadeIn 6 4
+    $ "hh27"
+      <| n "[21!4, [10 11 <2 2*3 2!6> 11]*2]"
+      # coarse 16
+      # lpf (300 + 1700*(slow 16 (ssr (1/16) saw)))
+      # room 0.2
+      # sz 0.9
+      # gain 1.02
+
+do
+  jumpIn' 4 0
+    $ "hh27"
+      <| n "[21!4, [10 11 <2 2*3 2!6> 11]*2]"
+      # coarse 16
+      # lpf (300 + 2700*(slow 16 (ssr (1/16) saw)))
+      # room 0.2
+      # sz 0.9
+      # gain 1.02
+  jumpIn' 5 0 sc
+
+d8
+  $ "hh27"
+    <| n "[21, [~ 13 2 13]*2]"
+
+jumpIn' 8 0
+  $ "hh27"
+    <| n "[21!4, [10 11 <2 2*3 2!6> 11]*2]"
+    # squiz 1.25
+    # gain 1.01
+
+do
+  xfadeIn 2 8 sc
+  xfadeIn 3 8 sc
+  jumpIn' 4 0 sc
+  xfadeIn 5 8 sc
+  jumpIn' 6 0 sc
+  xfadeIn 8 8 sc
+
+ss
